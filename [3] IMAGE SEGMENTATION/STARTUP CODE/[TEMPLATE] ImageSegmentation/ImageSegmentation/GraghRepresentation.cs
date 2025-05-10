@@ -8,6 +8,7 @@ namespace ImageTemplate
 {
     public class GraghRepresentation
     {
+        //tuple(int weight,pair<int,int> src, pair<int,int> dest);
         // int v;
         List<Dictionary<(int, int), int>> blue_adj_list = new List<Dictionary<(int, int), int>>();
         List<Dictionary<(int, int), int>> green_adj_list = new List<Dictionary<(int, int), int>>();
@@ -42,6 +43,7 @@ namespace ImageTemplate
                         red_neighbors.Add((i - 1,j), red_weight);
                         green_neighbors.Add((i - 1, j), green_weight);
                         blue_neighbors.Add((i-1, j), blue_weight);
+                        //blue_adj_list.push({blue_weight, (i, j), (i + 1, j)});
                     }
                     //down
                     if (i < length - 1)
@@ -122,6 +124,28 @@ namespace ImageTemplate
 
             return (red_adj_list, green_adj_list, blue_adj_list);
         }
- 
+        int findParent()
+        {
+            //find the parent of the node
+            return 0;
+        }
+        int findInternalDiffernece() //return the biggest edge in the tree,
+                                     //check if there is only one pixel in
+                                     //the tree, return 0
+        {
+            //find the internal difference of the node
+            return 0;
+        }
+        bool unionSet()
+        {
+            //if two nodes are in the same set (have the same parent) don't merge, return false
+            //else calculate everything and check
+            //if the internal difference is less than the threshold, return false
+            //else merge the two sets and return true
+            //union the two sets
+            return true;
+        }
+
+
     }
 }
