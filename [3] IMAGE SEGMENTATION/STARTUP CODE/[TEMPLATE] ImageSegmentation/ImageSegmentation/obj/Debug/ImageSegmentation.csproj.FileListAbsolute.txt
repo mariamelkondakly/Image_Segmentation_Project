@@ -29,3 +29,13 @@ E:\algo_projet\Image_Segmentation_Project\[3] IMAGE SEGMENTATION\STARTUP CODE\[T
 E:\algo_projet\Image_Segmentation_Project\[3] IMAGE SEGMENTATION\STARTUP CODE\[TEMPLATE] ImageSegmentation\ImageSegmentation\obj\Debug\ImageSegmentation.csproj.CoreCompileInputs.cache
 E:\algo_projet\Image_Segmentation_Project\[3] IMAGE SEGMENTATION\STARTUP CODE\[TEMPLATE] ImageSegmentation\ImageSegmentation\obj\Debug\ImageTemplate.exe
 E:\algo_projet\Image_Segmentation_Project\[3] IMAGE SEGMENTATION\STARTUP CODE\[TEMPLATE] ImageSegmentation\ImageSegmentation\obj\Debug\ImageTemplate.pdb
+D:\Image_Segmentation_Project\[3] IMAGE SEGMENTATION\STARTUP CODE\[TEMPLATE] ImageSegmentation\ImageSegmentation\bin\Debug\ImageTemplate.exe.config
+D:\Image_Segmentation_Project\[3] IMAGE SEGMENTATION\STARTUP CODE\[TEMPLATE] ImageSegmentation\ImageSegmentation\bin\Debug\ImageTemplate.exe
+D:\Image_Segmentation_Project\[3] IMAGE SEGMENTATION\STARTUP CODE\[TEMPLATE] ImageSegmentation\ImageSegmentation\bin\Debug\ImageTemplate.pdb
+D:\Image_Segmentation_Project\[3] IMAGE SEGMENTATION\STARTUP CODE\[TEMPLATE] ImageSegmentation\ImageSegmentation\obj\Debug\ImageSegmentation.csproj.AssemblyReference.cache
+D:\Image_Segmentation_Project\[3] IMAGE SEGMENTATION\STARTUP CODE\[TEMPLATE] ImageSegmentation\ImageSegmentation\obj\Debug\ImageTemplate.MainForm.resources
+D:\Image_Segmentation_Project\[3] IMAGE SEGMENTATION\STARTUP CODE\[TEMPLATE] ImageSegmentation\ImageSegmentation\obj\Debug\ImageTemplate.Properties.Resources.resources
+D:\Image_Segmentation_Project\[3] IMAGE SEGMENTATION\STARTUP CODE\[TEMPLATE] ImageSegmentation\ImageSegmentation\obj\Debug\ImageSegmentation.csproj.GenerateResource.cache
+D:\Image_Segmentation_Project\[3] IMAGE SEGMENTATION\STARTUP CODE\[TEMPLATE] ImageSegmentation\ImageSegmentation\obj\Debug\ImageSegmentation.csproj.CoreCompileInputs.cache
+D:\Image_Segmentation_Project\[3] IMAGE SEGMENTATION\STARTUP CODE\[TEMPLATE] ImageSegmentation\ImageSegmentation\obj\Debug\ImageTemplate.exe
+D:\Image_Segmentation_Project\[3] IMAGE SEGMENTATION\STARTUP CODE\[TEMPLATE] ImageSegmentation\ImageSegmentation\obj\Debug\ImageTemplate.pdb

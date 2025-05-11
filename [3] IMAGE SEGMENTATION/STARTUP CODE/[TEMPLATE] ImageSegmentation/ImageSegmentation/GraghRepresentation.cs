@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ImageTemplate
 {
@@ -10,11 +12,37 @@ namespace ImageTemplate
     {
         //tuple(int weight,pair<int,int> src, pair<int,int> dest);
         // int v;
-        List<Dictionary<(int, int), int>> blue_adj_list = new List<Dictionary<(int, int), int>>();
+        /*List<Dictionary<(int, int), int>> blue_adj_list = new List<Dictionary<(int, int), int>>();
         List<Dictionary<(int, int), int>> green_adj_list = new List<Dictionary<(int, int), int>>();
-        List<Dictionary<(int, int), int>> red_adj_list = new List<Dictionary<(int, int), int>>();
+        List<Dictionary<(int, int), int>> red_adj_list = new List<Dictionary<(int, int), int>>();*/
 
-        public (List<Dictionary<(int, int), int>> red, List<Dictionary<(int, int), int>> green, List<Dictionary<(int, int), int>> blue) pixels_graph(RGBPixel[,] ImageMatrix)
+        //list <tuple> ,pair (source ),pair (distination ) ,boolen use as a id for pixel 
+        // 
+        List<(int weight, int s, int d)> blue_adj_list = new List<(int, int, int)>();
+        List<(int weight, int s, int d)> red_adj_list = new List<(int, int, int)>();
+
+        List<(int weight, int s, int d)> green_adj_list = new List<(int, int, int)>();
+
+        int posithoin_encoding (int row ,int col ,int widht)
+
+        {
+
+            //ENCODING 
+            int pos = row * widht + col; 
+            return pos;
+
+            
+
+        }
+        (int x ,int y) posithon_decoding(int pos , int width)
+        {
+              int x = pos % width; // col ==j
+             int y = pos / width; // row =i
+
+            return (x, y);
+        }
+
+        public (List<(int, int, int)> red, List<(int, int, int)> green, List<(int, int, int)> blue) pixels_graph(RGBPixel[,] ImageMatrix)
         {
             red_adj_list.Clear();
             green_adj_list.Clear();
@@ -23,106 +51,82 @@ namespace ImageTemplate
             int red_weight;
             int green_weight;
             int blue_weight;
+            int Src;
+            int dis;
+
+
             // List<List<RGBPixel>> adj_list = new List<List<RGBPixel>>();
             int length = ImageMatrix.GetLength(0);
-            int width = ImageMatrix.GetLength(1);
+            int width = ImageMatrix.GetLength(1);//hwa n 
             for (int i = 0; i < length; i++)
             {
-                for (int j = 0; j < width; j++)
+                for (int j = 0; j < width; j++)//j == col ==> width  , i == row ==> lenght 
                 {
-                    Dictionary<(int, int),int> blue_neighbors = new Dictionary<(int, int),int>();
-                    Dictionary<(int, int),int> green_neighbors = new Dictionary<(int, int),int>();
-                    Dictionary<(int, int),int> red_neighbors= new Dictionary<(int, int),int>();
- 
-                    //up
-                    if (i > 0 )
-                    {
-                         red_weight = Math.Abs(ImageMatrix[i, j].red - ImageMatrix[i - 1, j].red);
-                        green_weight = Math.Abs(ImageMatrix[i, j].green - ImageMatrix[i - 1, j].green);
-                        blue_weight = Math.Abs(ImageMatrix[i, j].blue - ImageMatrix[i - 1, j].blue);
-                        red_neighbors.Add((i - 1,j), red_weight);
-                        green_neighbors.Add((i - 1, j), green_weight);
-                        blue_neighbors.Add((i-1, j), blue_weight);
-                        //blue_adj_list.push({blue_weight, (i, j), (i + 1, j)});
-                    }
+                   
+
                     //down
-                    if (i < length - 1)
+                    if (i + 1 < length)
                     {
                         red_weight = Math.Abs(ImageMatrix[i, j].red - ImageMatrix[i + 1, j].red);
                         green_weight = Math.Abs(ImageMatrix[i, j].green - ImageMatrix[i + 1, j].green);
                         blue_weight = Math.Abs(ImageMatrix[i, j].blue - ImageMatrix[i + 1, j].blue);
-                        red_neighbors.Add((i + 1, j), red_weight);
-                        green_neighbors.Add((i + 1, j), green_weight);
-                        blue_neighbors.Add((i + 1, j), blue_weight);
+                        Src = posithoin_encoding(i, j, width);
+
+                        dis = posithoin_encoding(i + 1, j, width);
+                        red_adj_list.Add((red_weight, Src, dis));
+                        green_adj_list.Add((green_weight, Src, dis));
+                        blue_adj_list.Add((blue_weight, Src, dis));
                     }
-                    //left
-                    if (j > 0)
-                    {
-                        red_weight = Math.Abs(ImageMatrix[i, j].red - ImageMatrix[i, j - 1].red);
-                        green_weight = Math.Abs(ImageMatrix[i, j].green - ImageMatrix[i, j - 1].green);
-                        blue_weight = Math.Abs(ImageMatrix[i, j].blue - ImageMatrix[i, j - 1].blue);
-                        red_neighbors.Add((i, j - 1), red_weight);
-                        green_neighbors.Add((i, j - 1), green_weight);
-                        blue_neighbors.Add((i, j - 1), blue_weight);
-                    }
-                    //right
-                    if (j < width - 1)
+                    // right 
+                    if (j + 1 < width)
                     {
                         red_weight = Math.Abs(ImageMatrix[i, j].red - ImageMatrix[i, j + 1].red);
                         green_weight = Math.Abs(ImageMatrix[i, j].green - ImageMatrix[i, j + 1].green);
                         blue_weight = Math.Abs(ImageMatrix[i, j].blue - ImageMatrix[i, j + 1].blue);
-                        red_neighbors.Add((i, j + 1), red_weight);
-                        green_neighbors.Add((i, j + 1), green_weight);
-                        blue_neighbors.Add((i, j + 1), blue_weight);
+                        Src = posithoin_encoding(i, j, width);
+                        dis = posithoin_encoding(i, j + 1, width);
+                        red_adj_list.Add((red_weight, Src, dis));
+                        green_adj_list.Add((green_weight, Src, dis));
+                        blue_adj_list.Add((blue_weight, Src, dis));
+
+
                     }
-                    //up left
-                    if (i > 0 && j > 0)
+                    // Diagonal down-right(x + 1, y + 1)
+                    if (j + 1 < width && i+1<length)
                     {
-                        red_weight = Math.Abs(ImageMatrix[i, j].red - ImageMatrix[i - 1, j - 1].red);
-                        green_weight = Math.Abs(ImageMatrix[i, j].green - ImageMatrix[i - 1, j - 1].green);
-                        blue_weight = Math.Abs(ImageMatrix[i, j].blue - ImageMatrix[i - 1, j - 1].blue);
-                        red_neighbors.Add((i - 1, j - 1), red_weight);
-                        green_neighbors.Add((i - 1, j - 1), green_weight);
-                        blue_neighbors.Add((i - 1, j - 1), blue_weight);
+                        red_weight = Math.Abs(ImageMatrix[i, j].red - ImageMatrix[i+1, j + 1].red);
+                        green_weight = Math.Abs(ImageMatrix[i, j].green - ImageMatrix[i + 1, j + 1].green);
+                        blue_weight = Math.Abs(ImageMatrix[i, j].blue - ImageMatrix[i + 1, j + 1].blue);
+                        Src = posithoin_encoding(i, j, width);
+                        dis = posithoin_encoding(i+1, j + 1, width);
+                        red_adj_list.Add((red_weight, Src, dis));
+                        green_adj_list.Add((green_weight, Src, dis));
+                        blue_adj_list.Add((blue_weight, Src, dis));
+
                     }
-                    //up right
-                    if (i > 0 && j < width - 1)
-                    {
-                        red_weight = Math.Abs(ImageMatrix[i, j].red - ImageMatrix[i - 1, j + 1].red);
-                        green_weight = Math.Abs(ImageMatrix[i, j].green - ImageMatrix[i - 1, j + 1].green);
-                        blue_weight = Math.Abs(ImageMatrix[i, j].blue - ImageMatrix[i - 1, j + 1].blue);
-                        red_neighbors.Add((i - 1, j + 1), red_weight);
-                        green_neighbors.Add((i - 1, j + 1), green_weight);
-                        blue_neighbors.Add((i - 1, j + 1), blue_weight);
-                    }
-                    //down left
-                    if (i < length - 1 && j > 0)
+
+
+                    //Diagonal down-left(x - 1, y + 1)
+                    if ( j-1 >=0 && i+1<length)
                     {
                         red_weight = Math.Abs(ImageMatrix[i, j].red - ImageMatrix[i + 1, j - 1].red);
                         green_weight = Math.Abs(ImageMatrix[i, j].green - ImageMatrix[i + 1, j - 1].green);
                         blue_weight = Math.Abs(ImageMatrix[i, j].blue - ImageMatrix[i + 1, j - 1].blue);
-                        red_neighbors.Add((i + 1, j - 1), red_weight);
-                        green_neighbors.Add((i + 1, j - 1), green_weight);
-                        blue_neighbors.Add((i + 1, j - 1), blue_weight);
+                        Src = posithoin_encoding(i, j, width);
+                        dis = posithoin_encoding(i+1, j - 1, width);
+                        red_adj_list.Add((red_weight, Src, dis));
+                        green_adj_list.Add((green_weight, Src, dis));
+                        blue_adj_list.Add((blue_weight, Src, dis));
+
                     }
-                    //down right
-                    if (i < length - 1 && j < width - 1)
-                    {
-                        red_weight = Math.Abs(ImageMatrix[i, j].red - ImageMatrix[i + 1, j + 1].red);
-                        green_weight = Math.Abs(ImageMatrix[i, j].green - ImageMatrix[i + 1, j + 1].green);
-                        blue_weight = Math.Abs(ImageMatrix[i, j].blue - ImageMatrix[i + 1, j + 1].blue);
-                        red_neighbors.Add((i + 1, j + 1), red_weight);
-                        green_neighbors.Add((i + 1, j + 1), green_weight);
-                        blue_neighbors.Add((i + 1, j + 1), blue_weight);
-                    }
-                    red_adj_list.Add(red_neighbors);
-                    green_adj_list.Add(green_neighbors);
-                    blue_adj_list.Add(blue_neighbors);
+
+
 
                 }
             }
 
             return (red_adj_list, green_adj_list, blue_adj_list);
+
         }
         int findParent()
         {
