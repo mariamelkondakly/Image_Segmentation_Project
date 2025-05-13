@@ -40,7 +40,7 @@ namespace ImageTemplate
 
             // mike
             GraghRepresentation graphs = new GraghRepresentation();
-            var (red, green, blue) = graphs.pixels_graph(ImageMatrix);
+            var (red, green, blue) = graphs.pixels_graph(ImageMatrix, maskSize);
 
         }
 

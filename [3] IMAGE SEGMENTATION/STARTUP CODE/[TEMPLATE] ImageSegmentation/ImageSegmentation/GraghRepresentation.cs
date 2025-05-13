@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -42,8 +44,12 @@ namespace ImageTemplate
             return (x, y);
         }
 
-        public (List<(int, int, int)> red, List<(int, int, int)> green, List<(int, int, int)> blue) pixels_graph(RGBPixel[,] ImageMatrix)
+        int k;
+
+        public (List<(int, int, int)> red, List<(int, int, int)> green, List<(int, int, int)> blue) pixels_graph(RGBPixel[,] ImageMatrix , int maskSize)
         {
+            k = maskSize;
+
             red_adj_list.Clear();
             green_adj_list.Clear();
             blue_adj_list.Clear();
@@ -128,25 +134,77 @@ namespace ImageTemplate
             return (red_adj_list, green_adj_list, blue_adj_list);
 
         }
-        int findParent()
+
+        //Mariam matnsesh t sort al 3 arraysssss
+
+        private Dictionary<int, int> mappingToParents = new Dictionary<int, int>(); // key is pixel id and value is root id
+        private Dictionary<int, (int,int)> sizeOfSetAndMaxEdge = new Dictionary<int, (int, int)>(); // key is root node id and value is size of comp and max edge in it 
+    
+        int findParent(int pixelID) // lazm?? 
         {
             //find the parent of the node
-            return 0;
+            if (mappingToParents[pixelID] != pixelID)
+                mappingToParents[pixelID] = findParent(mappingToParents[pixelID]);
+            return mappingToParents[pixelID];
         }
-        int findInternalDiffernece() //return the biggest edge in the tree,
+        void initializeFistPixel(int pixelID)
+        {
+            mappingToParents[pixelID] = pixelID; // lwa7dha fel region 
+            sizeOfSetAndMaxEdge[pixelID] = (1, 0);
+        }
+       // (int,int) findSizeAndInternalDiffernece(int pixelID) //return the biggest edge in the tree,
                                      //check if there is only one pixel in
                                      //the tree, return 0
-        {
+      //  {
             //find the internal difference of the node
-            return 0;
-        }
-        bool unionSet()
+        //    int parentId = findParent(pixelID);    
+       //     return (sizeOfSetAndMaxEdge[parentId]);           
+      //  }
+       
+        bool unionSet(int pixel1ID, int pixel2ID, int edgeWeight)
         {
             //if two nodes are in the same set (have the same parent) don't merge, return false
             //else calculate everything and check
             //if the internal difference is less than the threshold, return false
             //else merge the two sets and return true
             //union the two sets
+            if (!mappingToParents.ContainsKey(pixel1ID)) 
+                initializeFistPixel(pixel1ID);           
+            if (!mappingToParents.ContainsKey(pixel2ID)) 
+                initializeFistPixel(pixel2ID);
+
+          //  int root1 = findParent(pixel1ID);
+           // int root2 = findParent(pixel2ID);
+            int root1 = mappingToParents[pixel1ID];
+            int root2 = mappingToParents[pixel2ID];
+            if (root1 == root2)
+                return false;
+
+            var(size1, maxEdge1) = sizeOfSetAndMaxEdge[root1];
+            var (size2, maxEdge2) = sizeOfSetAndMaxEdge[root2];
+            int pixel1threshold = maxEdge1 + (k / size1);
+            int pixel2threshold = maxEdge2 + (k / size2);
+            int mint = Math.Min(pixel1threshold, pixel2threshold);
+            // menna check han merge wla la
+            if (edgeWeight > mint)
+                return false;
+
+            // lw han merge 
+            mappingToParents[root2] = root1; // now pixel1ID is the root          
+            foreach (var key in mappingToParents.Keys)
+            {          
+                if (mappingToParents[key] == root2)
+                {
+                    mappingToParents[key] = root1;
+                }
+            }
+
+
+
+            sizeOfSetAndMaxEdge.Remove(root2);
+            sizeOfSetAndMaxEdge[root1] = (size1 + size2, Math.Max(Math.Max(maxEdge1, maxEdge2), edgeWeight)); // update size and max edge
+
+
             return true;
         }
 
