@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace ImageTemplate
 {
@@ -20,23 +23,30 @@ namespace ImageTemplate
 
         //list <tuple> ,pair (source ),pair (distination ) ,boolen use as a id for pixel 
         // 
+
+        int width, length;
         List<(int weight, int s, int d)> blue_adj_list = new List<(int, int, int)>();
         List<(int weight, int s, int d)> red_adj_list = new List<(int, int, int)>();
 
         List<(int weight, int s, int d)> green_adj_list = new List<(int, int, int)>();
 
-        int posithoin_encoding (int row ,int col ,int widht)
+        private Dictionary<int, int> mappingToParents = new Dictionary<int, int>(); // key is pixel id and value is root id
+        private List<Dictionary<int, int>> MaxEdge = new List<Dictionary<int, int>> { //key is the root pixel, max edge
+            new Dictionary<int, int>(), // Red
+            new Dictionary<int, int>(), // Green
+            new Dictionary<int, int>()  // Blue
+        };
+        private Dictionary<int, int> clusterSize = new Dictionary<int, int>(); //key is the root pixel, clusterSize
 
+        private int nSize;
+
+        int position_encoding (int row ,int col ,int width)
         {
-
             //ENCODING 
-            int pos = row * widht + col; 
+            int pos = row * width + col;
             return pos;
-
-            
-
         }
-        (int x ,int y) posithon_decoding(int pos , int width)
+        (int x ,int y) position_decoding(int pos)
         {
               int x = pos % width; // col ==j
              int y = pos / width; // row =i
@@ -44,11 +54,10 @@ namespace ImageTemplate
             return (x, y);
         }
 
-        int k;
+        int k=1;
 
-        public (List<(int, int, int)> red, List<(int, int, int)> green, List<(int, int, int)> blue) pixels_graph(RGBPixel[,] ImageMatrix , int maskSize)
+        public RGBPixel[,] pixels_graph(RGBPixel[,] ImageMatrix , int maskSize)
         {
-            k = maskSize;
 
             red_adj_list.Clear();
             green_adj_list.Clear();
@@ -62,8 +71,8 @@ namespace ImageTemplate
 
 
             // List<List<RGBPixel>> adj_list = new List<List<RGBPixel>>();
-            int length = ImageMatrix.GetLength(0);
-            int width = ImageMatrix.GetLength(1);//hwa n 
+            length = ImageMatrix.GetLength(0);
+            width = ImageMatrix.GetLength(1);//hwa n 
             for (int i = 0; i < length; i++)
             {
                 for (int j = 0; j < width; j++)//j == col ==> width  , i == row ==> lenght 
@@ -76,9 +85,9 @@ namespace ImageTemplate
                         red_weight = Math.Abs(ImageMatrix[i, j].red - ImageMatrix[i + 1, j].red);
                         green_weight = Math.Abs(ImageMatrix[i, j].green - ImageMatrix[i + 1, j].green);
                         blue_weight = Math.Abs(ImageMatrix[i, j].blue - ImageMatrix[i + 1, j].blue);
-                        Src = posithoin_encoding(i, j, width);
+                        Src = position_encoding(i, j, width);
 
-                        dis = posithoin_encoding(i + 1, j, width);
+                        dis = position_encoding(i + 1, j, width);
                         red_adj_list.Add((red_weight, Src, dis));
                         green_adj_list.Add((green_weight, Src, dis));
                         blue_adj_list.Add((blue_weight, Src, dis));
@@ -89,8 +98,8 @@ namespace ImageTemplate
                         red_weight = Math.Abs(ImageMatrix[i, j].red - ImageMatrix[i, j + 1].red);
                         green_weight = Math.Abs(ImageMatrix[i, j].green - ImageMatrix[i, j + 1].green);
                         blue_weight = Math.Abs(ImageMatrix[i, j].blue - ImageMatrix[i, j + 1].blue);
-                        Src = posithoin_encoding(i, j, width);
-                        dis = posithoin_encoding(i, j + 1, width);
+                        Src = position_encoding(i, j, width);
+                        dis = position_encoding(i, j + 1, width);
                         red_adj_list.Add((red_weight, Src, dis));
                         green_adj_list.Add((green_weight, Src, dis));
                         blue_adj_list.Add((blue_weight, Src, dis));
@@ -103,8 +112,8 @@ namespace ImageTemplate
                         red_weight = Math.Abs(ImageMatrix[i, j].red - ImageMatrix[i+1, j + 1].red);
                         green_weight = Math.Abs(ImageMatrix[i, j].green - ImageMatrix[i + 1, j + 1].green);
                         blue_weight = Math.Abs(ImageMatrix[i, j].blue - ImageMatrix[i + 1, j + 1].blue);
-                        Src = posithoin_encoding(i, j, width);
-                        dis = posithoin_encoding(i+1, j + 1, width);
+                        Src = position_encoding(i, j, width);
+                        dis = position_encoding(i+1, j + 1, width);
                         red_adj_list.Add((red_weight, Src, dis));
                         green_adj_list.Add((green_weight, Src, dis));
                         blue_adj_list.Add((blue_weight, Src, dis));
@@ -118,8 +127,8 @@ namespace ImageTemplate
                         red_weight = Math.Abs(ImageMatrix[i, j].red - ImageMatrix[i + 1, j - 1].red);
                         green_weight = Math.Abs(ImageMatrix[i, j].green - ImageMatrix[i + 1, j - 1].green);
                         blue_weight = Math.Abs(ImageMatrix[i, j].blue - ImageMatrix[i + 1, j - 1].blue);
-                        Src = posithoin_encoding(i, j, width);
-                        dis = posithoin_encoding(i+1, j - 1, width);
+                        Src = position_encoding(i, j, width);
+                        dis = position_encoding(i+1, j - 1, width);
                         red_adj_list.Add((red_weight, Src, dis));
                         green_adj_list.Add((green_weight, Src, dis));
                         blue_adj_list.Add((blue_weight, Src, dis));
@@ -130,16 +139,53 @@ namespace ImageTemplate
 
                 }
             }
-
-            return (red_adj_list, green_adj_list, blue_adj_list);
+            nSize = red_adj_list.Count();
+            MST();
+            return ColourImage(ImageMatrix);
 
         }
+        RGBPixel[,] ColourImage(RGBPixel[,] imageMatrix)
+        {
+            foreach (int key in mappingToParents.Keys)
+            {
+                (int x, int y) = position_decoding(key);
+                (int xParent, int yParent) = position_decoding(mappingToParents[key]);
+
+                imageMatrix[x, y].red = imageMatrix[xParent, yParent].red;
+                imageMatrix[x, y].green = imageMatrix[xParent, yParent].green;
+                imageMatrix[x, y].blue = imageMatrix[xParent, yParent].blue;
+
+            }
+            return imageMatrix;
+        }
+
+
 
         //Mariam matnsesh t sort al 3 arraysssss
 
-        private Dictionary<int, int> mappingToParents = new Dictionary<int, int>(); // key is pixel id and value is root id
-        private Dictionary<int, (int,int)> sizeOfSetAndMaxEdge = new Dictionary<int, (int, int)>(); // key is root node id and value is size of comp and max edge in it 
-    
+        void MST()
+        {
+            red_adj_list.Sort();
+            blue_adj_list.Sort();
+            green_adj_list.Sort();
+
+
+            int noOfEdges = 0;
+            for (int i = 0; i < nSize && noOfEdges != nSize - 1; i++)
+            {
+                bool union = unionSet(red_adj_list[i].s, red_adj_list[i].d, red_adj_list[i].weight);
+
+
+
+                if (union)
+                {
+                    List<int> weights = new List<int> { blue_adj_list[i].weight, red_adj_list[i].weight, green_adj_list[i].weight };
+                    noOfEdges++;
+                    merge(blue_adj_list[i].s, blue_adj_list[i].d, weights);
+
+                }
+            }
+        }
         int findParent(int pixelID) // lazm?? 
         {
             //find the parent of the node
@@ -147,10 +193,13 @@ namespace ImageTemplate
                 mappingToParents[pixelID] = findParent(mappingToParents[pixelID]);
             return mappingToParents[pixelID];
         }
+
         void initializeFistPixel(int pixelID)
         {
-            mappingToParents[pixelID] = pixelID; // lwa7dha fel region 
-            sizeOfSetAndMaxEdge[pixelID] = (1, 0);
+            mappingToParents.Add(pixelID,pixelID); // lwa7dha fel region 
+            for(int i=0; i<3;i++)
+                MaxEdge[i][pixelID] = (0);
+            clusterSize[pixelID] = 1;
         }
        // (int,int) findSizeAndInternalDiffernece(int pixelID) //return the biggest edge in the tree,
                                      //check if there is only one pixel in
@@ -179,35 +228,62 @@ namespace ImageTemplate
             int root2 = mappingToParents[pixel2ID];
             if (root1 == root2)
                 return false;
+            int size1 = clusterSize[root1];
+            int size2 = clusterSize[root2]
+                ;
+            Console.WriteLine("sizeee: "+size1 + " " + size2);
 
-            var(size1, maxEdge1) = sizeOfSetAndMaxEdge[root1];
-            var (size2, maxEdge2) = sizeOfSetAndMaxEdge[root2];
-            int pixel1threshold = maxEdge1 + (k / size1);
-            int pixel2threshold = maxEdge2 + (k / size2);
-            int mint = Math.Min(pixel1threshold, pixel2threshold);
+            for (int i = 0; i < 3; i++) {
+                int maxEdge1=MaxEdge[i][root1]; //size, max edge
+                int maxEdge2 = MaxEdge[i][root2]; //size, max edge
+
+                int pixel1threshold = maxEdge1 + (k / size1);
+                int pixel2threshold = maxEdge2 + (k / size2);
+                int mint = Math.Min(pixel1threshold, pixel2threshold);
+                if (edgeWeight > mint)
+                    return false;
+
+            }
             // menna check han merge wla la
-            if (edgeWeight > mint)
-                return false;
+
 
             // lw han merge 
+
+            return true;
+        }
+        void merge(int pixel1ID, int pixel2ID, List<int>weights)
+        {
+            if (!mappingToParents.ContainsKey(pixel1ID))
+                initializeFistPixel(pixel1ID);
+            if (!mappingToParents.ContainsKey(pixel2ID))
+                initializeFistPixel(pixel2ID);
+            int root1 = mappingToParents[pixel1ID];
+            int root2 = mappingToParents[pixel2ID];
+
+
             mappingToParents[root2] = root1; // now pixel1ID is the root          
-            foreach (var key in mappingToParents.Keys)
-            {          
+            foreach (var key in mappingToParents.Keys.ToList())
+            {
                 if (mappingToParents[key] == root2)
                 {
                     mappingToParents[key] = root1;
                 }
             }
 
+            int size1 = clusterSize[root1];
+            int size2 = clusterSize[root2];
+            clusterSize.Remove(root2);
+            clusterSize[root1]= size1 + size2;
 
+            for (int i = 0; i < 3; i++)
+            {
+                int maxEdge1 = MaxEdge[i][root1];
+                int maxEdge2 = MaxEdge[i][root2];
 
-            sizeOfSetAndMaxEdge.Remove(root2);
-            sizeOfSetAndMaxEdge[root1] = (size1 + size2, Math.Max(Math.Max(maxEdge1, maxEdge2), edgeWeight)); // update size and max edge
-
-
-            return true;
+                MaxEdge[i].Remove(root2);
+                MaxEdge[i][root1] = Math.Max(Math.Max(maxEdge1, maxEdge2), weights[i]); // update size and max edge
+            }
         }
-
 
     }
 }

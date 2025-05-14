@@ -36,11 +36,13 @@ namespace ImageTemplate
             double sigma = double.Parse(txtGaussSigma.Text);
             int maskSize = (int)nudMaskSize.Value ;
             ImageMatrix = ImageOperations.GaussianFilter1D(ImageMatrix, maskSize, sigma);
-            ImageOperations.DisplayImage(ImageMatrix, pictureBox2);
 
             // mike
             GraghRepresentation graphs = new GraghRepresentation();
-            var (red, green, blue) = graphs.pixels_graph(ImageMatrix, maskSize);
+            //ImageOperations.DisplayImage(ImageMatrix, pictureBox2);
+
+
+            ImageOperations.DisplayImage(graphs.pixels_graph(ImageMatrix, maskSize), pictureBox2);
 
         }
 
@@ -50,6 +52,11 @@ namespace ImageTemplate
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
         {
 
         }
