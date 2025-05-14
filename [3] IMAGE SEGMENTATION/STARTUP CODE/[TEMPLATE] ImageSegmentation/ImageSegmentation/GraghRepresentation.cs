@@ -51,7 +51,7 @@ namespace ImageTemplate
               int x = pos % width; // col ==j
              int y = pos / width; // row =i
 
-            return (x, y);
+            return (y, x);
         }
 
         int k=1;
@@ -144,6 +144,12 @@ namespace ImageTemplate
             return ColourImage(ImageMatrix);
 
         }
+
+        bool IsInside(RGBPixel[,] img, int i, int j)
+        {
+            return i >= 0 && i < img.GetLength(0) && j >= 0 && j < img.GetLength(1);
+        }
+
         RGBPixel[,] ColourImage(RGBPixel[,] imageMatrix)
         {
             foreach (int key in mappingToParents.Keys)
@@ -151,9 +157,12 @@ namespace ImageTemplate
                 (int x, int y) = position_decoding(key);
                 (int xParent, int yParent) = position_decoding(mappingToParents[key]);
 
-                imageMatrix[x, y].red = imageMatrix[xParent, yParent].red;
-                imageMatrix[x, y].green = imageMatrix[xParent, yParent].green;
-                imageMatrix[x, y].blue = imageMatrix[xParent, yParent].blue;
+                if (IsInside(imageMatrix, x, y) && IsInside(imageMatrix, xParent, yParent))
+                {
+                    imageMatrix[x, y].red = imageMatrix[xParent, yParent].red;
+                    imageMatrix[x, y].green = imageMatrix[xParent, yParent].green;
+                    imageMatrix[x, y].blue = imageMatrix[xParent, yParent].blue;
+                }
 
             }
             return imageMatrix;
@@ -229,8 +238,11 @@ namespace ImageTemplate
             if (root1 == root2)
                 return false;
             int size1 = clusterSize[root1];
-            int size2 = clusterSize[root2]
-                ;
+            int size2 = clusterSize[root2];
+            if (size1 == 0)
+                size1 = 1; // or handle differently depending on your logic
+            if (size2 == 0)
+                size2 = 1; // or handle differently depending on your logic
             Console.WriteLine("sizeee: "+size1 + " " + size2);
 
             for (int i = 0; i < 3; i++) {
