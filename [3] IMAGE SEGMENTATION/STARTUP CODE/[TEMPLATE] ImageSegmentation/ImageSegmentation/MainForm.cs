@@ -42,7 +42,7 @@ namespace ImageTemplate
             //ImageOperations.DisplayImage(ImageMatrix, pictureBox2);
 
 
-            ImageOperations.DisplayImage(graphs.pixels_graph(ImageMatrix, maskSize), pictureBox2);
+            ImageOperations.DisplayImage(graphs.pixels_graph(ImageMatrix, maskSize, textBox1.Text), pictureBox2);
 
         }
 
@@ -57,6 +57,16 @@ namespace ImageTemplate
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
