@@ -25,10 +25,13 @@ namespace ImageTemplate
         // 
 
         int width, length;
-        List<(int weight, int s, int d)> blue_adj_list = new List<(int, int, int)>();
-        List<(int weight, int s, int d)> red_adj_list = new List<(int, int, int)>();
+        //List<(int weight, int s, int d)> blue_adj_list = new List<(int, int, int)>();
+        //List<(int weight, int s, int d)> red_adj_list = new List<(int, int, int)>();
 
-        List<(int weight, int s, int d)> green_adj_list = new List<(int, int, int)>();
+        //List<(int weight, int s, int d)> green_adj_list = new List<(int, int, int)>();
+
+        List<(int s, int d, int redWeight, int greenWeight, int blueWeight)> adj ;   
+
 
         //private Dictionary<int, int> mappingToParents = new Dictionary<int, int>(); // key is pixel id and value is root id
         //private List<Dictionary<int, int>> MaxEdge = new List<Dictionary<int, int>> { //key is the root pixel, max edge
@@ -63,10 +66,9 @@ namespace ImageTemplate
         {
             k = int.Parse(kString);
 
-            red_adj_list.Clear();
-            green_adj_list.Clear();
-            blue_adj_list.Clear();
-
+            //red_adj_list.Clear();
+            //green_adj_list.Clear();
+            //blue_adj_list.Clear();
             int red_weight;
             int green_weight;
             int blue_weight;
@@ -77,6 +79,8 @@ namespace ImageTemplate
             // List<List<RGBPixel>> adj_list = new List<List<RGBPixel>>();
             length = ImageMatrix.GetLength(0);
             width = ImageMatrix.GetLength(1);//hwa n 
+            adj = new List<(int, int, int, int, int)>(length * width);
+            adj.Clear();
             for (int i = 0; i < length; i++)
             {
                 for (int j = 0; j < width; j++)//j == col ==> width  , i == row ==> lenght 
@@ -91,9 +95,10 @@ namespace ImageTemplate
                         Src = position_encoding(i, j, width);
 
                         dis = position_encoding(i + 1, j, width);
-                        red_adj_list.Add((red_weight, Src, dis));
-                        green_adj_list.Add((green_weight, Src, dis));
-                        blue_adj_list.Add((blue_weight, Src, dis));
+                        //red_adj_list.Add((red_weight, Src, dis));
+                        //green_adj_list.Add((green_weight, Src, dis));
+                        //blue_adj_list.Add((blue_weight, Src, dis));
+                        adj.Add((Src, dis, red_weight, green_weight, blue_weight));
                     }
                     // right 
                     if (j + 1 < width)
@@ -103,11 +108,11 @@ namespace ImageTemplate
                         blue_weight = Math.Abs(ImageMatrix[i, j].blue - ImageMatrix[i, j + 1].blue);
                         Src = position_encoding(i, j, width);
                         dis = position_encoding(i, j + 1, width);
-                        red_adj_list.Add((red_weight, Src, dis));
-                        green_adj_list.Add((green_weight, Src, dis));
-                        blue_adj_list.Add((blue_weight, Src, dis));
+                        //red_adj_list.Add((red_weight, Src, dis));
+                        //green_adj_list.Add((green_weight, Src, dis));
+                        //blue_adj_list.Add((blue_weight, Src, dis));
 
-
+                        adj.Add((Src, dis, red_weight, green_weight, blue_weight));
                     }
                     // Diagonal down-right(x + 1, y + 1)
                     if (j + 1 < width && i + 1 < length)
@@ -117,12 +122,11 @@ namespace ImageTemplate
                         blue_weight = Math.Abs(ImageMatrix[i, j].blue - ImageMatrix[i + 1, j + 1].blue);
                         Src = position_encoding(i, j, width);
                         dis = position_encoding(i + 1, j + 1, width);
-                        red_adj_list.Add((red_weight, Src, dis));
-                        green_adj_list.Add((green_weight, Src, dis));
-                        blue_adj_list.Add((blue_weight, Src, dis));
-
+                        //red_adj_list.Add((red_weight, Src, dis));
+                        //green_adj_list.Add((green_weight, Src, dis));
+                        //blue_adj_list.Add((blue_weight, Src, dis));
+                        adj.Add((Src, dis, red_weight, green_weight, blue_weight));
                     }
-
 
                     //Diagonal down-left(x - 1, y + 1)
                     if (j - 1 >= 0 && i + 1 < length)
@@ -132,15 +136,15 @@ namespace ImageTemplate
                         blue_weight = Math.Abs(ImageMatrix[i, j].blue - ImageMatrix[i + 1, j - 1].blue);
                         Src = position_encoding(i, j, width);
                         dis = position_encoding(i + 1, j - 1, width);
-                        red_adj_list.Add((red_weight, Src, dis));
-                        green_adj_list.Add((green_weight, Src, dis));
-                        blue_adj_list.Add((blue_weight, Src, dis));
-
+                        //red_adj_list.Add((red_weight, Src, dis));
+                        //green_adj_list.Add((green_weight, Src, dis));
+                        //blue_adj_list.Add((blue_weight, Src, dis));
+                        adj.Add((Src, dis, red_weight, green_weight, blue_weight));
                     }
 
                 }
             }
-            nSize = red_adj_list.Count();
+            nSize = adj.Count();
 
             int numPixels = length * width;
             parent = new int[numPixels];
@@ -194,14 +198,16 @@ namespace ImageTemplate
 
         void sortEdgeList()
         {
-            Dictionary<(int s, int d), int> redWeights = new Dictionary<(int s, int d), int>();
-            foreach (var i in red_adj_list)
-            {
-                redWeights[(i.s, i.d)] = i.weight;
-            }
-            red_adj_list = red_adj_list.OrderBy(edge => edge.weight).ToList();
-            green_adj_list = green_adj_list.OrderBy(edge => redWeights[(edge.s, edge.d)]).ToList();
-            blue_adj_list = blue_adj_list.OrderBy(edge => redWeights[(edge.s, edge.d)]).ToList();
+            //Dictionary<(int s, int d), int> redWeights = new Dictionary<(int s, int d), int>();
+            //foreach (var i in adj)
+            //{
+            //    redWeights[(i.s, i.d)] = i.weight;
+            //}
+            //red_adj_list = red_adj_list.OrderBy(edge => edge.weight).ToList();
+            //green_adj_list = green_adj_list.OrderBy(edge => redWeights[(edge.s, edge.d)]).ToList();
+            //blue_adj_list = blue_adj_list.OrderBy(edge => redWeights[(edge.s, edge.d)]).ToList();
+
+            adj = adj.OrderBy(edge => edge.redWeight).ToList();
         }
 
         void MST()
@@ -213,11 +219,11 @@ namespace ImageTemplate
             int noOfEdges = 0;
             for (int i = 0; i < nSize && noOfEdges != nSize - 1; i++)
             {
-                List<int> weights = new List<int> { blue_adj_list[i].weight, red_adj_list[i].weight, green_adj_list[i].weight };
+               // List<int> weights = new List<int> { blue_adj_list[i].weight, red_adj_list[i].weight, green_adj_list[i].weight };
+               List<int> weights = new List<int> { adj[i].redWeight, adj[i].greenWeight, adj[i].blueWeight } ;
+               // unionSet(red_adj_list[i].s, red_adj_list[i].d, weights);
+               unionSet(adj[i].s, adj[i].d, weights);
 
-                 unionSet(red_adj_list[i].s, red_adj_list[i].d, weights);
-
-              
             }
         }
         int findParent(int pixelID) // lazm?? 
