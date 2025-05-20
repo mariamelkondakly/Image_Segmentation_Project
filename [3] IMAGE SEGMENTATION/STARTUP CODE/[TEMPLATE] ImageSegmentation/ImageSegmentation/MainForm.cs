@@ -35,8 +35,11 @@ namespace ImageTemplate
         {
             double sigma = double.Parse(txtGaussSigma.Text);
             int maskSize = (int)nudMaskSize.Value ;
-            ImageMatrix = ImageOperations.GaussianFilter1D(ImageMatrix, maskSize, sigma);
 
+            //maria
+            if (!checkBox1.Checked)
+            ImageMatrix = ImageOperations.GaussianFilter1D(ImageMatrix, maskSize, sigma);
+          
             // mike
             GraghRepresentation graphs = new GraghRepresentation();
             //ImageOperations.DisplayImage(ImageMatrix, pictureBox2);
@@ -72,6 +75,11 @@ namespace ImageTemplate
         }
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click_1(object sender, EventArgs e)
         {
 
         }

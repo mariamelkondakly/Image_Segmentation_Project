@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Policy;
@@ -163,6 +164,7 @@ namespace ImageTemplate
             }
 
             MST();
+            WriteInFile();
             return ColourImage(ImageMatrix);
 
         }
@@ -189,7 +191,45 @@ namespace ImageTemplate
                 }
             }
 
+            
+
             return imageMatrix;
+        }
+
+        void WriteInFile()
+        {
+            string projectDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
+
+            string path = Path.Combine(projectDir, "ImageSegmentation", "numOfSegmentsAndSizes.txt");
+
+            HashSet<int> seen = new HashSet<int>();
+
+            string content = " ";           
+
+            List<int> regSizes = new List<int>();
+
+            for (int i = 0; i < parent.Length; i++)
+            {
+                int root = findParent(i);
+                if (!seen.Contains(root))
+                {
+                    seen.Add(root);                   
+                    regSizes.Add(size[root]);
+                }
+            }
+
+            content = "Number of regions : " + seen.Count + " \n";
+            regSizes.Sort();
+            
+
+            for (int i = regSizes.Count-1; i >= 0; i--)
+            {
+                content += "region size : " + regSizes[i] + " \n";
+            }
+
+            File.WriteAllText(path, content);
+
+
         }
 
 
@@ -271,7 +311,7 @@ namespace ImageTemplate
                 size[rootP2] += size[rootP1];
 
                 for (int i = 0; i < 3; i++) { 
-                maxEdge[i][rootP1] = Math.Max(Math.Max(maxEdge[i][rootP1], maxEdge[i][rootP2]), weights[i]);
+                maxEdge[i][rootP2] = Math.Max(Math.Max(maxEdge[i][rootP1], maxEdge[i][rootP2]), weights[i]);
                 }
             }
             else
@@ -280,7 +320,7 @@ namespace ImageTemplate
                 size[rootP1] += size[rootP2];
                 for (int i = 0; i < 3; i++)
                 {
-                    maxEdge[i][rootP2] = Math.Max(Math.Max(maxEdge[i][rootP1], maxEdge[i][rootP2]), weights[i]);
+                    maxEdge[i][rootP1] = Math.Max(Math.Max(maxEdge[i][rootP1], maxEdge[i][rootP2]), weights[i]);
                 }
             }
             return true;
