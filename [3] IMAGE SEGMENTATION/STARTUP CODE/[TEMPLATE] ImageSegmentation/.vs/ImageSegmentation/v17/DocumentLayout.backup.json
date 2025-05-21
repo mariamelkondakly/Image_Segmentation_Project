@@ -1,21 +1,21 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\ALGO\\[TEMPLATE] ImageSegmentation\\[TEMPLATE] ImageSegmentation\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\",
+  "WorkspaceRootPath": "E:\\algo_projet\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7CA8077F-C27A-400D-B6C9-7737665499AC}|ImageSegmentation\\ImageSegmentation.csproj|e:\\algo\\[template] imagesegmentation\\[template] imagesegmentation\\image_segmentation_project\\[3] image segmentation\\startup code\\[template] imagesegmentation\\imagesegmentation\\graghrepresentation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{7CA8077F-C27A-400D-B6C9-7737665499AC}|ImageSegmentation\\ImageSegmentation.csproj|e:\\algo_projet\\image_segmentation_project\\[3] image segmentation\\startup code\\[template] imagesegmentation\\imagesegmentation\\graghrepresentation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7CA8077F-C27A-400D-B6C9-7737665499AC}|ImageSegmentation\\ImageSegmentation.csproj|solutionrelative:imagesegmentation\\graghrepresentation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7CA8077F-C27A-400D-B6C9-7737665499AC}|ImageSegmentation\\ImageSegmentation.csproj|e:\\algo\\[template] imagesegmentation\\[template] imagesegmentation\\image_segmentation_project\\[3] image segmentation\\startup code\\[template] imagesegmentation\\imagesegmentation\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{7CA8077F-C27A-400D-B6C9-7737665499AC}|ImageSegmentation\\ImageSegmentation.csproj|E:\\algo_projet\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\imagesegmentation\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7CA8077F-C27A-400D-B6C9-7737665499AC}|ImageSegmentation\\ImageSegmentation.csproj|solutionrelative:imagesegmentation\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7CA8077F-C27A-400D-B6C9-7737665499AC}|ImageSegmentation\\ImageSegmentation.csproj|e:\\algo\\[template] imagesegmentation\\[template] imagesegmentation\\image_segmentation_project\\[3] image segmentation\\startup code\\[template] imagesegmentation\\imagesegmentation\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{7CA8077F-C27A-400D-B6C9-7737665499AC}|ImageSegmentation\\ImageSegmentation.csproj|E:\\algo_projet\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\imagesegmentation\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{7CA8077F-C27A-400D-B6C9-7737665499AC}|ImageSegmentation\\ImageSegmentation.csproj|solutionrelative:imagesegmentation\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7CA8077F-C27A-400D-B6C9-7737665499AC}|ImageSegmentation\\ImageSegmentation.csproj|e:\\algo\\[template] imagesegmentation\\[template] imagesegmentation\\image_segmentation_project\\[3] image segmentation\\startup code\\[template] imagesegmentation\\imagesegmentation\\mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{7CA8077F-C27A-400D-B6C9-7737665499AC}|ImageSegmentation\\ImageSegmentation.csproj|E:\\algo_projet\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\imagesegmentation\\mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7CA8077F-C27A-400D-B6C9-7737665499AC}|ImageSegmentation\\ImageSegmentation.csproj|solutionrelative:imagesegmentation\\mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -32,49 +32,46 @@
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "MainForm.Designer.cs",
-              "DocumentMoniker": "E:\\ALGO\\[TEMPLATE] ImageSegmentation\\[TEMPLATE] ImageSegmentation\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\ImageSegmentation\\MainForm.Designer.cs",
+              "DocumentMoniker": "E:\\algo_projet\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\ImageSegmentation\\MainForm.Designer.cs",
               "RelativeDocumentMoniker": "ImageSegmentation\\MainForm.Designer.cs",
-              "ToolTip": "E:\\ALGO\\[TEMPLATE] ImageSegmentation\\[TEMPLATE] ImageSegmentation\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\ImageSegmentation\\MainForm.Designer.cs",
+              "ToolTip": "E:\\algo_projet\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\ImageSegmentation\\MainForm.Designer.cs",
               "RelativeToolTip": "ImageSegmentation\\MainForm.Designer.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAYwDgBAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-15T15:25:59.652Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-15T15:25:59.652Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "MainForm.cs [Design]",
-              "DocumentMoniker": "E:\\ALGO\\[TEMPLATE] ImageSegmentation\\[TEMPLATE] ImageSegmentation\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\ImageSegmentation\\MainForm.cs",
+              "DocumentMoniker": "E:\\algo_projet\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\ImageSegmentation\\MainForm.cs",
               "RelativeDocumentMoniker": "ImageSegmentation\\MainForm.cs",
               "ToolTip": "E:\\ALGO\\[TEMPLATE] ImageSegmentation\\[TEMPLATE] ImageSegmentation\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\ImageSegmentation\\MainForm.cs [Design]",
-              "RelativeToolTip": "ImageSegmentation\\MainForm.cs [Design]",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\ALGO\\[TEMPLATE] ImageSegmentation\\[TEMPLATE] ImageSegmentation\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\ImageSegmentation\\MainForm.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-15T15:24:21.228Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-05-15T15:24:21.228Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "MainForm.cs",
-              "DocumentMoniker": "E:\\ALGO\\[TEMPLATE] ImageSegmentation\\[TEMPLATE] ImageSegmentation\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\ImageSegmentation\\MainForm.cs",
+              "DocumentMoniker": "E:\\algo_projet\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\ImageSegmentation\\MainForm.cs",
               "RelativeDocumentMoniker": "ImageSegmentation\\MainForm.cs",
-              "ToolTip": "E:\\ALGO\\[TEMPLATE] ImageSegmentation\\[TEMPLATE] ImageSegmentation\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\ImageSegmentation\\MainForm.cs",
+              "ToolTip": "E:\\algo_projet\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\ImageSegmentation\\MainForm.cs",
               "RelativeToolTip": "ImageSegmentation\\MainForm.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAAQwCwAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-15T15:23:37.146Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-15T15:23:37.146Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "GraghRepresentation.cs",
-              "DocumentMoniker": "E:\\ALGO\\[TEMPLATE] ImageSegmentation\\[TEMPLATE] ImageSegmentation\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\ImageSegmentation\\GraghRepresentation.cs",
+              "DocumentMoniker": "E:\\algo_projet\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\ImageSegmentation\\GraghRepresentation.cs",
               "RelativeDocumentMoniker": "ImageSegmentation\\GraghRepresentation.cs",
-              "ToolTip": "E:\\ALGO\\[TEMPLATE] ImageSegmentation\\[TEMPLATE] ImageSegmentation\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\ImageSegmentation\\GraghRepresentation.cs",
+              "ToolTip": "E:\\algo_projet\\Image_Segmentation_Project\\[3] IMAGE SEGMENTATION\\STARTUP CODE\\[TEMPLATE] ImageSegmentation\\ImageSegmentation\\GraghRepresentation.cs",
               "RelativeToolTip": "ImageSegmentation\\GraghRepresentation.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAANUAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAgwNUAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-06T00:17:20.439Z",
               "EditorCaption": ""
