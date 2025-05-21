@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -24,7 +25,7 @@ namespace ImageTemplate
 
         //list <tuple> ,pair (source ),pair (distination ) ,boolen use as a id for pixel 
         // 
-
+        Stopwatch timer;
         int width, length;
         //List<(int weight, int s, int d)> blue_adj_list = new List<(int, int, int)>();
         //List<(int weight, int s, int d)> red_adj_list = new List<(int, int, int)>();
@@ -162,9 +163,14 @@ namespace ImageTemplate
                 maxEdge[1][i] = 0;
                 maxEdge[2][i] = 0;
             }
+            timer = Stopwatch.StartNew();
 
             MST();
+
+           
+
             WriteInFile();
+
             return ColourImage(ImageMatrix);
 
         }
@@ -191,8 +197,10 @@ namespace ImageTemplate
                 }
             }
 
-            
 
+            timer.Stop();
+            long time = timer.ElapsedMilliseconds;
+            Console.WriteLine("Time taken: " + time + " ms");
             return imageMatrix;
         }
 

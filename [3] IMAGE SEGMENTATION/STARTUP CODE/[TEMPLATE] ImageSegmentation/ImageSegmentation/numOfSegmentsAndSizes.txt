@@ -1,4 +1,9 @@
-Number of regions : 3 
-region size : 81948 
-region size : 22801 
-region size : 15251 
+Number of regions : 8 
+region size : 30134 
+region size : 20163 
+region size : 1 
+region size : 1 
+region size : 1 
+region size : 1 
+region size : 1 
+region size : 1 
