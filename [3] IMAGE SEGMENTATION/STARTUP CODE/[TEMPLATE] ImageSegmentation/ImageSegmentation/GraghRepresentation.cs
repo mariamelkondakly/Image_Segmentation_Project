@@ -554,13 +554,13 @@ namespace ImageTemplate
                     imageMatrix[i, j] = regionColors[id];
                 }
             }
-
+            var sizes = regionSizes.Values.ToList();
+            sizes.Sort((a, b) => b.CompareTo(a)); // Descending
+            MainForm.stopwatch.Stop();
             // Save region stats to file
             string projectDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
             string path = Path.Combine(projectDir, "ImageSegmentation", "numOfSegmentsAndSizes.txt");
 
-            var sizes = regionSizes.Values.ToList();
-            sizes.Sort((a, b) => b.CompareTo(a)); // Descending
 
             string content = $"Number of regions : {sizes.Count}\n";
             foreach (int s in sizes)
@@ -663,57 +663,6 @@ namespace ImageTemplate
 
             return true;
         }
-        void SaveSegmentedImage(int[] parent, string outputPath)
-        {
-            RGBPixel[,] segmentedImage = new RGBPixel[length, width];
-            Dictionary<int, RGBPixel> regionColors = new Dictionary<int, RGBPixel>();
-            Random rand = new Random();
-
-            for (int i = 0; i < length; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    int id = position_encoding(i, j, width);
-                    int root = findParent(id, parent);
-
-                    if (!regionColors.ContainsKey(root))
-                    {
-                        regionColors[root] = new RGBPixel
-                        {
-                            red = (byte)rand.Next(256),
-                            green = (byte)rand.Next(256),
-                            blue = (byte)rand.Next(256)
-                        };
-                    }
-
-                    segmentedImage[i, j] = regionColors[root];
-                }
-            }
-
-            string projectDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
-            string fullPath = Path.Combine(projectDir, "ImageSegmentation", outputPath);
-            //ImageOperations.DisplayImage(segmentedImage, new PictureBox()); // Optional for GUI
-            SaveImage(segmentedImage, fullPath);
-        }
-        public static void SaveImage(RGBPixel[,] ImageMatrix, string FilePath)
-        {
-            int height = ImageMatrix.GetLength(0);
-            int width = ImageMatrix.GetLength(1);
-            Bitmap bmp = new Bitmap(width, height);
-
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    RGBPixel pixel = ImageMatrix[i, j];
-                    Color color = Color.FromArgb(pixel.red, pixel.green, pixel.blue);
-                    bmp.SetPixel(j, i, color);
-                }
-            }
-
-            bmp.Save(FilePath); // Automatically infers format from extension
-        }
-
         
         //bool unionSet(int pixel1ID, int pixel2ID, List<int> weights)
         //{
